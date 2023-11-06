@@ -313,3 +313,4 @@ BEGIN
 	AND shipper = 'Fast Delivery'
 END
 go
+select * from [Book] where [is_sale] = 1
