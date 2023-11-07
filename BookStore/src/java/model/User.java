@@ -3,24 +3,36 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+//[id] int IDENTITY(1,1) NOT NULL,
+//	[fullname] [nvarchar](50),
 
-/**
- *
- * @author ACER
- */
+import java.sql.Date;
+
+//	[gender] [bit],
+//	[dob] [date],
+//	[email] [varchar](50) NULL,
+//	[phone] [varchar](11) NULL,
+//	[address] [nvarchar](200) NULL,
+//	[username] [varchar](50) NOT NULL,
+//	[password] [varchar](50) NOT NULL,
+//	[is_super] [bit] NOT NULL
 public class User {
-    private int id;
-    private String name, gender, dob, email, phone, address, username, password;
-    private boolean is_super;
 
-    public User(String account, String password) {
-        this.username = account;
-        this.password = password;
+    int id;
+    String fullname;
+    Boolean gender;
+    Date dob;
+    String email;
+    String phone;
+    String address, username, password;
+    Boolean is_super;
+
+    public User() {
     }
 
-    public User(int id, String name, String gender, String dob, String email, String phone, String address, String username, String password, boolean is_super) {
+    public User(int id, String fullname, Boolean gender, Date dob, String email, String phone, String address, String username, String password, Boolean is_super) {
         this.id = id;
-        this.name = name;
+        this.fullname = fullname;
         this.gender = gender;
         this.dob = dob;
         this.email = email;
@@ -31,35 +43,6 @@ public class User {
         this.is_super = is_super;
     }
 
-    public User(String name, String gender, String dob, String email, String phone, String username, String password) {
-        this.name = name;
-        this.gender = gender;
-        this.dob = dob;
-        this.email = email;
-        this.phone = phone;
-        this.username = username;
-        this.password = password;
-    }
-
-    public User(int id, String name, String username, String gender, String dob, String email, String phone, String address) {
-        this.id = id;
-        this.name = name;
-        this.username= username;
-        this.gender = gender;
-        this.dob = dob;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-    }
-
-    public boolean is_super() {
-        return is_super;
-    }
-
-    public void setIs_super(boolean is_super) {
-        this.is_super = is_super;
-    }
-    
     public int getId() {
         return id;
     }
@@ -68,20 +51,28 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
-    public String getGender() {
+    public Boolean getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Boolean gender) {
         this.gender = gender;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
 
     public String getEmail() {
@@ -108,14 +99,6 @@ public class User {
         this.address = address;
     }
 
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -130,6 +113,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getIs_super() {
+        return is_super;
+    }
+
+    public void setIs_super(Boolean is_super) {
+        this.is_super = is_super;
     }
 
 }

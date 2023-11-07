@@ -43,9 +43,39 @@ public class BookDAO extends DBContext {
         return list;
     }
 
-    public static void main(String[] args) {
-        BookDAO b = new BookDAO();
-        System.out.println(b.Get3FeatureBook().get(0).getImage());
+    public List<FeatureBook> GetAllBooks(String msg) {
+        String sql = null;
+        if (msg.equals("all")) {
+            sql = "SELECT id,title,author,price,is_sale,discount,image FROM [dbo].[Book]";
+        } else if (msg.equals("asc")) {
+            sql = "SELECT id,title,author,price,is_sale,discount,image FROM [dbo].[Book] ORDER BY price * (1 - discount / 100.0) ASC";
+        } else if(msg.equals("desc")) {
+            sql = "SELECT id,title,author,price,is_sale,discount,image FROM [dbo].[Book] ORDER BY price * (1 - discount / 100.0) DESC";
+        }
+        List<FeatureBook> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                FeatureBook f = new FeatureBook();
+                f.setId(rs.getInt(1));
+                f.setTitle(rs.getString(2));
+                f.setAuthor(rs.getString(3));
+                f.setPrice(rs.getDouble(4));
+                f.setIs_sale(rs.getBoolean(5));
+                f.setDiscount(rs.getInt(6));
+                f.setImage(rs.getString(7));
+                list.add(f);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
     }
+    public static void main(String[] args) {
+        BookDAO d= new BookDAO();
+        System.out.println(d.GetAllBooks("all"));
+    }
+  
 
 }

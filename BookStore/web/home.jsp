@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
     <html>
 
         <head>
@@ -58,21 +57,33 @@
                                         <a class="nav-link" href="about.html"> About</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="seft.jsp">Seft</a>
+                                        <a class="nav-link" href="seft">Seft</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="blog.html"> Blog </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="login.jsp">Login</a>
+                                        <c:choose>
+                                            <c:when test="${not empty sessionScope.user}">
+                                                <a class="nav-link" href="logout">Logout</a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a class="nav-link" href="login">Login</a>
+                                            </c:otherwise>
+                                        </c:choose>     
                                     </li>
                                 </ul>
-                                <from class="search_form">
-                                    <input type="text" class="form-control" placeholder="Search here...">
-                                    <button class="" type="submit">
-                                        <i class="fa fa-search" aria-hidden="true"></i>
-                                    </button>
-                                </from>
+                                <div id="greeting">
+                                    <c:choose>
+                                        <c:when test="${not empty sessionScope.user}">
+                                            Hello <c:out value="${sessionScope.user.username}" />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <!-- You can put something else here if the user is not logged in -->
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+
                             </div>
                         </nav>
                     </div>

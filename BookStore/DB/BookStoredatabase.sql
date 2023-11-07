@@ -75,7 +75,6 @@ CREATE TABLE [dbo].[Book](
 	[discount] smallint,
 	[image] [varchar](500),
 	[description] nvarchar(2000),
-	[views] int
  CONSTRAINT [PK_book] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -174,8 +173,7 @@ GO
 ALter table [dbo].[Customer] with check add foreign key ([orderid])
 REFERENCES [dbo].[Order] ([id])
 GO
-ALTER TABLE [dbo].[Book] ADD  DEFAULT (0) FOR [views]
-GO
+
 ------
 ALTER TABLE [dbo].[User] ADD  DEFAULT (0) FOR [is_super]
 GO
@@ -203,8 +201,8 @@ GO
 
 --ALTER TABLE [dbo].[user]  WITH CHECK ADD  CONSTRAINT [CK_user_id] CHECK  (([user_id] like '[A-Z][A-Z][A-Z][1-9][0-9][0-9][0-9][0-9][FM]' OR [user_id] like '[A-Z]-[A-Z][1-9][0-9][0-9][0-9][0-9][FM]'))
 GO
-INSERT [dbo].[User] ([fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super]) VALUES ( N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhvn102@gmail.com', N'0382132025', N'FBT University ', N'admin', N'admin',1)
-INSERT [dbo].[User] ([fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super]) VALUES ( N'Vinh Nguyen', 1, CAST(N'2002-12-25' AS Date), N'vinhvn102@gmail.com', N'0382132025', N'FBT University ', N'vinh', N'2002',0)
+INSERT [dbo].[User] ([fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super]) VALUES ( N'Hao Nguyen', 1, CAST(N'2003-11-2' AS Date), N'syhaoc2dh@gmail.com', N'0357455962', N'FBT University ', N'admin', N'admin',1)
+INSERT [dbo].[User] ([fullname], [gender], [dob], [email], [phone], [address], [username], [password], [is_super]) VALUES (N'Hao Nguyen', 1, CAST(N'2003-11-2' AS Date), N'syhaoc2dh@gmail.com', N'0357455962', N'FBT University ', N'hao', N'1',0)
 GO
 Insert [dbo].[Category] ([name]) values (N'Crime, Thriller & Mystery'),(N'Fantasy, Horror'),(N'Science/Historical Fiction'),(N'Manga&LN')
 GO
@@ -312,5 +310,6 @@ BEGIN
 	where id = (select id from inserted)
 	AND shipper = 'Fast Delivery'
 END
+drop database BOOKSTORE
 go
-select * from [Book] where [is_sale] = 1
+Select * from [User]

@@ -14,25 +14,35 @@ import model.User;
  *
  * @author 1112v
  */
+//int id;
+//    String fullname;
+//    Boolean gender;
+//    Date dob;
+//    String email;
+//    String phone;
+//    String address, username, password;
+//    Boolean is_super;
 public class UserDAO extends DBContext{
-    public User getUser(String key, String pass) {
-        String sql = "Select * from [User] where (username='" + key + "' OR email='" + key + "') AND password='" + pass + "'";
+    public User getUser(String username, String password) {
+        String sql = "Select * from [User] where username=? AND password=?";
         try {
-           PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1,username);
+            st.setString(2, password);
             ResultSet rs;
             rs = st.executeQuery();
             while (rs.next()) {
-                int userid = rs.getInt(1);
-                String name = rs.getString(2);
-                String gender = rs.getBoolean(3) ? "Male" : "Female";
-                SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-                String dob = f.format(rs.getDate(4));
-                String email = rs.getString(5);
-                String phone = rs.getString(6);
-                String address = rs.getString(7);
-                String username = rs.getString(8);
-                boolean is_super = rs.getBoolean(10);
-                User u = new User(userid, name, gender, dob, email, phone, address, username, pass, is_super);
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setFullname(rs.getString("fullname"));
+                u.setGender(rs.getBoolean("gender"));
+                u.setDob(rs.getDate("dob"));
+                u.setEmail(rs.getString("email"));
+                u.setPhone(rs.getString("phone"));
+                u.setAddress(rs.getString("address"));
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password"));
+                u.setIs_super(rs.getBoolean("is_super"));
                 return u;
             }
         } catch (SQLException e) {
