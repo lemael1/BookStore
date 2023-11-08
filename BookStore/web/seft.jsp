@@ -3,7 +3,7 @@
     Created on : Nov 7, 2023, 12:59:31 AM
     Author     : 1112v
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -31,7 +31,20 @@
         <link href="css/style.css" rel="stylesheet" />
         <!-- responsive style -->
         <link href="css/responsive.css" rel="stylesheet" />
-
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <!-- bootstrap js -->
+        <script src="js/bootstrap.js"></script>
+        <!-- custom js -->      
+        <!-- Google Map -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+        </script>
+          <script>
+            function sortPrice() {
+                var select = document.getElementById("sortPrice");
+                var option = select.value;
+                window.location.href = "seft?sortprice=" + option;
+            }
+        </script>
     </head>
 
     <body>
@@ -66,14 +79,14 @@
                                     <a class="nav-link" href="blog.html"> Blog </a>
                                 </li>
                                 <li class="nav-item">
-                                <c:choose>
-                                    <c:when test="${not empty sessionScope.user}">
-                                        <a class="nav-link" href="logout">Logout</a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a class="nav-link" href="login">Login</a>
-                                    </c:otherwise>
-                                </c:choose>     
+                                    <c:choose>
+                                        <c:when test="${not empty sessionScope.user}">
+                                            <a class="nav-link" href="logout">Logout</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="nav-link" href="login">Login</a>
+                                        </c:otherwise>
+                                    </c:choose>     
                                 </li>
                             </ul>
                             <div id="greeting">
@@ -119,7 +132,7 @@
                             <c:forEach items="${requestScope.book_list}" var="bl">
                                 <div class="book">
                                     <img src="${bl.image}" alt="Book image">
-                                    <h3><a href="book_detail_1.html">${bl.title}</a></h3>
+                                    <h3><a href="detail?id=${bl.id}">${bl.title}</a></h3>
                                     <p>${bl.author}</p>
                                     <c:set var="discountedPrice" value="${bl.price * (1 - bl.discount / 100.0)}" />
                                     <c:set var="roundedDiscountedPrice" value="${Math.round(discountedPrice * 100.0) / 100.0}" />
@@ -227,16 +240,7 @@
             </footer>
             <!-- footer section -->
 
-            <!-- jQery -->
-            <script src="js/jquery-3.4.1.min.js"></script>
-            <!-- bootstrap js -->
-            <script src="js/bootstrap.js"></script>
-            <!-- custom js -->
-            <script src="js/custom.js"></script>
-            <!-- Google Map -->
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
-            </script>
-            <!-- End Google Map -->
+
 
     </body>
 

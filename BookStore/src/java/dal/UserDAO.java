@@ -22,12 +22,13 @@ import model.User;
 //    String phone;
 //    String address, username, password;
 //    Boolean is_super;
-public class UserDAO extends DBContext{
+public class UserDAO extends DBContext {
+
     public User getUser(String username, String password) {
         String sql = "Select * from [User] where username=? AND password=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1,username);
+            st.setString(1, username);
             st.setString(2, password);
             ResultSet rs;
             rs = st.executeQuery();
@@ -50,18 +51,29 @@ public class UserDAO extends DBContext{
         }
         return null;
     }
-     public String getUsername(int userid) {
-         String sql = "select [username] from [User] where [id] = "+userid;
-        try{
+
+    public String getUsername(int userid) {
+        String sql = "select [username] from [User] where [id] = " + userid;
+        try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs;
             rs = st.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getString(1);
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("getNumberUser Error");
         }
         return null;
     }
+
+    public boolean isAdmin(User user) {
+        if (user.getUsername().equals("admin") && user.getPassword().equals("admin")) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 }

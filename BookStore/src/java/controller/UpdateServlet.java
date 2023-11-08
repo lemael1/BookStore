@@ -4,7 +4,8 @@
  */
 package controller;
 
-import dal.UserDAO;
+import dal.BookDAO;
+import dal.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,15 +13,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.User;
+import java.util.List;
+import model.Book;
+import model.Category;
 
 /**
  *
  * @author 1112v
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "UpdateServlet", urlPatterns = {"/update"})
+public class UpdateServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +41,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet UpdateServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +62,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        CategoryDAO c = new CategoryDAO();
+        List<Category> list_cate = c.getAllCategory();
+        request.setAttribute("list_cate", list_cate);
+        String id_raw = request.getParameter("id");
+        int id = Integer.parseInt(id_raw);
+        request.setAttribute("id", id);
+        request.getRequestDispatcher("admin/update.jsp").forward(request, response);
     }
 
     /**
@@ -74,23 +82,22 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username_raw = request.getParameter("username");
-        String password_raw = request.getParameter("password");
-        UserDAO ud = new UserDAO();
-        User user = ud.getUser(username_raw, password_raw);
-        if (user != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
-            if (ud.isAdmin(user)) {
-                response.sendRedirect("admin"); // Redirect to admin page
-            } else {
-                response.sendRedirect("home"); // Redirect to home page
-            }
-        } else {
-            request.setAttribute("error", "Username or password wrong!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
+        int id = Integer.parseInt(request.getParameter("id"));
+        String title = request.getParameter("title");
+        String author = request.getParameter("author");
+        int cateid = Integer.parseInt(request.getParameter("cateid"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        Double price = Double.parseDouble(request.getParameter("price"));
+        Boolean is_sale = "1".equals(request.getParameter("is_sale"));
+        int discount = Integer.parseInt(request.getParameter("discount"));
+        String image = request.getParameter("image");
+        String description = request.getParameter("description");
 
+        Book book = new Book(id, title, author, cateid, quantity, price, is_sale, discount, image, description);
+        BookDAO bookDAO = new BookDAO();
+        bookDAO.updateBook(book);
+
+        response.sendRedirect("admin.jsp");
     }
 
     /**

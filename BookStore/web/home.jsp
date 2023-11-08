@@ -203,7 +203,7 @@
                             <c:forEach items="${requestScope.list_feature}" var="lf">
                                 <div class="book">
                                     <img src="${lf.image}" alt="Book image">
-                                    <h3><a href="book_detail_1.html">${lf.title}</a></h3>
+                                    <h3><a href="detail?id=${lf.id}">${lf.title}</a></h3>
                                     <p>${lf.author}</p>
                                     <c:set var="discountedPrice" value="${lf.price * (1 - lf.discount / 100.0)}" />
                                     <c:set var="roundedDiscountedPrice" value="${Math.round(discountedPrice * 100.0) / 100.0}" />

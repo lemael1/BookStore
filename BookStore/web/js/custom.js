@@ -3,7 +3,7 @@
 function sortPrice() {
     var select = document.getElementById("sortPrice");
     var option=select.value;
-    window.location = "seft?sortprice=" + option;
+    window.location.href = "seft?sortprice=" + option;
 }
 
 
