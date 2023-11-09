@@ -26,7 +26,7 @@
             </select>
             <br>
             Quantity:<br>
-            <input type="text"  name="quantity"><br>
+            <input type="text" name="quantity" pattern="\d+" title="Please enter a positive integer"><br>
             Price:<br>
             <input type="text"  name="price"><br>
             Is Sale:<br>

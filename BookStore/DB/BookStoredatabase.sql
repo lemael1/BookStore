@@ -313,3 +313,4 @@ END
 drop database BOOKSTORE
 go
 Select * from [User]
+SELECT * FROM Book WHERE id = 1

@@ -18,30 +18,31 @@
             ID:<br>
             <input type="text" value="${id}" name="id" readonly><br>
             Title:<br>
-            <input type="text"  name="title"><br>
+            <input type="text"  name="title" required><br>
             Author:<br>
-            <input type="text" name="author"><br>
+            <input type="text" name="author" required><br>
             Category:<br>
-            <select name="cateid">
+            <select name="cateid" required>
                 <c:forEach items="${requestScope.list_cate}" var="lc">
                     <option value="${lc.id}">${lc.name}</option>
                 </c:forEach>
             </select>
             <br>
             Quantity:<br>
-            <input type="text"  name="quantity"><br>
+            <input type="text" name="quantity" pattern="\d+" title="Please enter a positive integer" required><br>
             Price:<br>
-            <input type="text"  name="price"><br>
+            <input type="text"  name="price" pattern="\d+(\.\d{2})?" title="Please enter a valid price" required><br>
             Is Sale:<br>
-            <input type="radio" value="1" name="is_sale"><br>Sales
+            <input type="radio" value="1" name="is_sale" checked><br>Sales
             <input type="radio" value="0" name="is_sale"><br>Not Sales
             Discount:<br>
-            <input type="text" name="discount"><br>
+            <input type="text" name="discount" pattern="\d+(\.\d{2})?" title="Please enter a valid discount"><br>
             Image:<br>
-            <input type="text" name="image"><br>
+            <input type="text" name="image" required><br>
             Description:<br>
-            <textarea id="description" name="description"></textarea><br>
+            <textarea id="description" name="description" required></textarea><br>
             <input type="submit" value="Update">
         </form>
+
     </body>
 </html>

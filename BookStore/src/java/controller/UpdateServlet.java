@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.List;
 import model.Book;
 import model.Category;
@@ -80,8 +81,10 @@ public class UpdateServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+  
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    try {
         int id = Integer.parseInt(request.getParameter("id"));
         String title = request.getParameter("title");
         String author = request.getParameter("author");
@@ -96,9 +99,18 @@ public class UpdateServlet extends HttpServlet {
         Book book = new Book(id, title, author, cateid, quantity, price, is_sale, discount, image, description);
         BookDAO bookDAO = new BookDAO();
         bookDAO.updateBook(book);
-
-        response.sendRedirect("admin.jsp");
+        request.setAttribute("message", "Book updated successfully");
+    } catch (NumberFormatException e) {
+        request.setAttribute("message", "Invalid input");
+    } catch (NullPointerException e) {
+        request.setAttribute("message", "Missing input");
+    } catch (SQLException e) {
+        request.setAttribute("message", "Failed to update book");
     }
+
+    request.getRequestDispatcher("admin").forward(request, response);
+}
+
 
     /**
      * Returns a short description of the servlet.

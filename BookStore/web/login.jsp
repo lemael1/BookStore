@@ -30,9 +30,11 @@
 				<input type="submit" value="Sign In" />
 			</form>
                 <br><!-- comment -->
+                <c:set var="thongbao"  value="${requestScope.thongbao}"></c:set>
+                <h2>${thongbao}</h2>
                 <c:set var="error"  value="${requestScope.error}"></c:set>
                 <h2>${error}</h2>
-                        <form action ="signup.html">
+                        <form action ="signup">
                             <input type="submit" value="Sign UP" />
 			</form>
 

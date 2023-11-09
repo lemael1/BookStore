@@ -101,7 +101,7 @@
     <c:set var="b" value="${requestScope.b}"></c:set>
         <div class = "card-wrapper" style=" display: flex;
              justify-content: space-between;">
-            <div class = "card" style="margin-top: -20px;">
+            <div class = "card" >
                 <!-- card left -->
                 <!-- card left -->
                 <div class = "product-imgs" style=" flex: 1;">

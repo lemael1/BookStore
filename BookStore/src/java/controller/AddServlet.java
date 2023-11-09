@@ -85,10 +85,10 @@ public class AddServlet extends HttpServlet {
         int discount = Integer.parseInt(request.getParameter("discount"));
         String image = request.getParameter("image");
         String description = request.getParameter("description");
-        BookDAO bd= BookDAO();
+        BookDAO bd= new BookDAO();
         Book b= new Book(title, author, cateid, quantity, price, is_sale, discount, image, description);
-        bd.addBook(b);
-        response.sendRedirect("admin.jsp");
+        bd.addBook(b);          
+        request.getRequestDispatcher("admin").forward(request, response);
         
         
     }
@@ -102,8 +102,6 @@ public class AddServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private BookDAO BookDAO() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   
 
 }

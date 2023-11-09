@@ -858,6 +858,7 @@ a:focus {
     overflow: hidden;
     max-width: 900px;
     width: 90%;
+    margin-top: -265px;
 }
 
 .card-wrapper {

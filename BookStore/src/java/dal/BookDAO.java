@@ -97,10 +97,11 @@ public class BookDAO extends DBContext {
         return books;
     }
 
-    public void updateBook(Book book) {
+    public void updateBook(Book book) throws SQLException {
         String sql = "UPDATE Book SET title = ?, author = ?, categoryid = ?, quantity = ?, price = ?, is_sale = ?, discount = ?, image = ?, description = ? WHERE id = ?";
+        PreparedStatement st = null;
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            st = connection.prepareStatement(sql);
             st.setString(1, book.getTitle());
             st.setString(2, book.getAuthor());
             st.setInt(3, book.getCategoryid());
@@ -112,13 +113,15 @@ public class BookDAO extends DBContext {
             st.setString(9, book.getDescription());
             st.setInt(10, book.getId());
             st.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("updateBook Error:" + e.getMessage());
+        } finally {
+            if (st != null) {
+                st.close();
+            }
         }
     }
 
     public void deleteBook(String id) {
-        String sql = "DELETE FROM Books WHERE id = ?";
+        String sql = "DELETE FROM Book WHERE id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, Integer.parseInt(id));
@@ -187,7 +190,6 @@ public class BookDAO extends DBContext {
         } finally {
             // close resources
         }
-        
 
         return book;
     }
