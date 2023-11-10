@@ -131,12 +131,14 @@
                 </div>
 
                 <div class = "purchase-info">
-                    <input type = "number" min = "0" value = "1">
-                    <button type = "button" class = "btn" style="background-color: red;
-                            color: white;">
-                        Add to Cart <i class = "fas fa-shopping-cart"></i>
-                    </button>
-                    
+                    <form action="order" method="post">
+                        <input type="hidden" name="bookId" value="${b.id}" />
+                        <input type="number" name="quantity" min="0" value="1" id="quantity" />
+                        <button type="submit" class="btn" style="background-color: red; color: white;">
+                            Add to Cart <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </form>
+
                 </div>
 
 

@@ -61,9 +61,9 @@ public class AddServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         CategoryDAO c= new CategoryDAO();
-        List<Category> list_cate1=c.getAllCategory();
-        request.setAttribute("list_cate1", list_cate1);
-       request.getRequestDispatcher("admin/add.jsp").forward(request, response);
+        List<Category> listC= c.getAllCategory();
+        request.setAttribute("listC", listC);
+        request.getRequestDispatcher("add.jsp").forward(request, response);
     } 
 
     /** 
@@ -88,7 +88,7 @@ public class AddServlet extends HttpServlet {
         BookDAO bd= new BookDAO();
         Book b= new Book(title, author, cateid, quantity, price, is_sale, discount, image, description);
         bd.addBook(b);          
-        request.getRequestDispatcher("admin").forward(request, response);
+        response.sendRedirect("admin");
         
         
     }

@@ -125,8 +125,6 @@ CREATE TABLE [dbo].[Order](
 	[id] int IDENTITY(1,1) NOT NULL,
 	[userid] int NOT NULL,
 	[orderdate] [date],
-	[subtotal] decimal(10,2) ,
-	[shipper] [nvarchar](50),
 	[total] decimal(10,2),
 	[status] [nvarchar](50)
  CONSTRAINT [PK_order] PRIMARY KEY CLUSTERED 
@@ -258,59 +256,12 @@ INSERT [dbo].[Book] ( [title], [author], [categoryid], [quantity], [price], [is_
 GO
 INSERT [dbo].[Book] ( [title], [author], [categoryid], [quantity], [price], [is_sale], [discount], [image], [description]) VALUES ( N'Classroom of the Elite Vol. 1', N'Syougo Kinugasa', 4, 200, CAST(13.99 AS Decimal(10, 2)), 1, 10, N'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540974678l/41085104.jpg', N'Students of the prestigious Tokyo Metropolitan Advanced Nurturing High School are given remarkable freedom—if they can win, barter, or save enough points to work their way up the ranks! Ayanokoji Kiyotaka has landed at the bottom in the scorned Class D, where he meets Horikita Suzune, who’s determined to rise up the ladder to Class A. Can they beat the system in a school where cutthroat competition is the name of the game?')
 GO
-SET IDENTITY_INSERT [dbo].[Order] ON 
-GO
-INSERT [dbo].[Order] ([id], [userid], [orderdate], [subtotal], [shipper], [total], [status]) VALUES (1, 2, CAST(N'2022-07-12' AS Date), CAST(61.76 AS Decimal(10, 2)), N'Fast Delivery', CAST(63.26 AS Decimal(10, 2)), N'Wait')
-GO
-INSERT [dbo].[Order] ([id], [userid], [orderdate], [subtotal], [shipper], [total], [status]) VALUES (2, 2, CAST(N'2022-07-12' AS Date), CAST(81.53 AS Decimal(10, 2)), N'Free Delivery', CAST(81.53 AS Decimal(10, 2)), N'Done')
-GO
-SET IDENTITY_INSERT [dbo].[Order] OFF
-GO
-SET IDENTITY_INSERT [dbo].[Customer] ON 
-GO
-INSERT [dbo].[Customer] ([id], [orderid], [userid], [name], [email], [phone], [address]) VALUES (1, 1, 2, N'Hao Nguyen', N'syhaoc2dh@gmail.com', N'0382132025', N'Thach Hoa, Thach That')
-GO
-INSERT [dbo].[Customer] ([id], [orderid], [userid], [name], [email], [phone], [address]) VALUES (2, 2, 2, N'Nguyen Hao', N'syhaoc2dh@gmail.com', N'0382132025', N'FBT University ')
-GO
-SET IDENTITY_INSERT [dbo].[Customer] OFF
-GO
-INSERT [dbo].[OrderItem] ([orderid], [bookid], [itemname], [quantity], [price]) VALUES (1, 2, N'And Then There Were None', 1, CAST(18.29 AS Decimal(10, 2)))
-GO
-INSERT [dbo].[OrderItem] ([orderid], [bookid], [itemname], [quantity], [price]) VALUES (1, 13, N'Fullmetal Alchemist, Vol. 1', 1, CAST(18.69 AS Decimal(10, 2)))
-GO
-INSERT [dbo].[OrderItem] ([orderid], [bookid], [itemname], [quantity], [price]) VALUES (1, 5, N'Lord of the Mysteries', 2, CAST(12.39 AS Decimal(10, 2)))
-GO
-INSERT [dbo].[OrderItem] ([orderid], [bookid], [itemname], [quantity], [price]) VALUES (2, 12, N'All the Light We Cannot See', 1, CAST(18.56 AS Decimal(10, 2)))
-GO
-INSERT [dbo].[OrderItem] ([orderid], [bookid], [itemname], [quantity], [price]) VALUES (2, 8, N'A Game Of Thrones: A Song of Ice and Fire', 3, CAST(20.99 AS Decimal(10, 2)))
-GO
-Create trigger CalcuSubtotal on [OrderItem] AFTER INSERT AS
-BEGIN
-	update [Order]
-	set [subtotal] = [subtotal] + (
-		Select i.price*i.quantity  from [inserted] i where i.orderid = [Order].id)
-	FROM [Order]
-	Join inserted on [Order].id = inserted.orderid
-	update [Order]
-	set [total] = [total] +(
-		Select i.price*i.quantity  from [inserted] i where i.orderid = [Order].id)
-	FROM [Order]
-	Join inserted on [Order].id = inserted.orderid
-	update [Book]
-	set [quantity] = [Book].[quantity] - (
-		select i.quantity from [inserted] i where i.bookid=[Book].id)
-	from [Book]
-	join inserted on [Book].id= inserted.bookid
-END
-go
-Create trigger Shipping on [Order] After INSERT AS
-BEGIN
-	update [Order]
-	set [total] = 1.5 
-	where id = (select id from inserted)
-	AND shipper = 'Fast Delivery'
-END
+
+
+
+
+
 drop database BOOKSTORE
 go
-Select * from [User]
-SELECT * FROM Book WHERE id = 1
+
+select * from [Book]

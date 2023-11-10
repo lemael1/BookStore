@@ -196,6 +196,6 @@ public class BookDAO extends DBContext {
 
     public static void main(String[] args) {
         BookDAO d = new BookDAO();
-        System.out.println(d.getDetailBook(1));
+        System.out.println(d.GetBookforAdmin());
     }
 }

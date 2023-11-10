@@ -27,7 +27,7 @@ import model.User;
 public class UserDAO extends DBContext {
 
     public List<User> GetAllUser() {
-        String sql = "select * from User";
+        String sql = "select * from [User]";
         List<User> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -107,7 +107,7 @@ public class UserDAO extends DBContext {
     public void addUser(User user) {
         try {
             // Tạo một đối tượng PreparedStatement
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO User (fullname, gender, dob, email, phone, address, username, password, is_super) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO [User] (fullname, gender, dob, email, phone, address, username, password, is_super) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             // Đặt giá trị cho các tham số
             stmt.setString(1, user.getFullname());
@@ -143,5 +143,8 @@ public class UserDAO extends DBContext {
         }
         return result;
     }
-
+     public static void main(String[] args) {
+         UserDAO us= new UserDAO();
+         System.out.println(us.isUsernameTaken("hung"));
+    }
 }

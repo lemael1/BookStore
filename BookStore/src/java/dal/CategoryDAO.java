@@ -15,27 +15,29 @@ import model.Category;
  *
  * @author 1112v
  */
-public class CategoryDAO extends DBContext{
+public class CategoryDAO extends DBContext {
+
     public List<Category> getAllCategory() {
-    List<Category> categories = new ArrayList<>();
-    String sql = "SELECT * FROM Category";
-    try {
-        PreparedStatement st = connection.prepareStatement(sql);
-        ResultSet rs = st.executeQuery();
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            Category category = new Category(id, name);
-            categories.add(category);
+        List<Category> categories = new ArrayList<>();
+        String sql = "SELECT * FROM Category";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                Category category = new Category(id, name);
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            System.out.println("getAllCategory Error:" + e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("getAllCategory Error:" + e.getMessage());
+        return categories;
     }
-    return categories;
-}
+
     public static void main(String[] args) {
-        CategoryDAO d= new CategoryDAO();
-        System.out.println(d.getAllCategory());
+        CategoryDAO d = new CategoryDAO();
+        System.out.println(d.getAllCategory().get(0).getName());
     }
-    
+
 }

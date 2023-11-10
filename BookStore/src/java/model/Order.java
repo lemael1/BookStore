@@ -12,32 +12,17 @@ public class Order {
     private int id;
     private int userid;
     private String orderdate;
-    private float subtotal;
     private float total;
-    private String shipper;
     private String status;
 
-    public Order(int id, int userid, String orderdate, float subtotal, String shipper, float total, String status) {
+    public Order() {
+    }
+
+    public Order(int id, int userid, String orderdate, float total, String status) {
         this.id = id;
         this.userid = userid;
         this.orderdate = orderdate;
-        this.subtotal = subtotal;
         this.total = total;
-        this.shipper = shipper;
-        this.status = status;
-    }
-
-    public Order(int userid, String orderdate) {
-        this.userid = userid;
-        this.orderdate = orderdate;
-        this.status = "Wait";
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -65,14 +50,6 @@ public class Order {
         this.orderdate = orderdate;
     }
 
-    public float getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(float subtotal) {
-        this.subtotal = subtotal;
-    }
-
     public float getTotal() {
         return total;
     }
@@ -81,16 +58,13 @@ public class Order {
         this.total = total;
     }
 
-    public String getShipper() {
-        return shipper;
+    public String getStatus() {
+        return status;
     }
 
-    public void setShipper(String shipper) {
-        this.shipper = shipper;
+    public void setStatus(String status) {
+        this.status = status;
     }
+
     
-    public String getUsername(){
-        UserDAO dao = new UserDAO();
-        return dao.getUsername(this.userid);
-    }
 }

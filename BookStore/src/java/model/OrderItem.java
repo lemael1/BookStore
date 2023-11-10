@@ -7,13 +7,16 @@ package model;
 
 /* @author ACER */
 public class OrderItem {
-    private int orderid;
-    private int bookid;
-    private String itemname;
-    private int quantity;
-    private float price;
+    int orderid;
+     int bookid;
+     String itemname;
+     int quantity;
+     double price;
 
-    public OrderItem(int orderid, int bookid, String itemname, int quantity, float price) {
+    public OrderItem() {
+    }
+
+    public OrderItem(int orderid, int bookid, String itemname, int quantity, double price) {
         this.orderid = orderid;
         this.bookid = bookid;
         this.itemname = itemname;
@@ -21,11 +24,10 @@ public class OrderItem {
         this.price = price;
     }
 
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
+    public OrderItem(int bookid, String itemname, int quantity, double price) {
+        this.bookid = bookid;
+        this.itemname = itemname;
+        this.quantity = quantity;
         this.price = price;
     }
 
@@ -45,6 +47,14 @@ public class OrderItem {
         this.bookid = bookid;
     }
 
+    public String getItemname() {
+        return itemname;
+    }
+
+    public void setItemname(String itemname) {
+        this.itemname = itemname;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -53,13 +63,14 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public String getItemname() {
-        return itemname;
+    public double getPrice() {
+        return price;
     }
 
-    public void setItemname(String itemname) {
-        this.itemname = itemname;
+    public void setPrice(double price) {
+        this.price = price;
     }
-    
+
+   
     
 }

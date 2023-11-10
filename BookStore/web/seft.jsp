@@ -38,7 +38,7 @@
         <!-- Google Map -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
         </script>
-          <script>
+        <script>
             function sortPrice() {
                 var select = document.getElementById("sortPrice");
                 var option = select.value;
@@ -70,7 +70,7 @@
                                     <a class="nav-link pl-lg-0" href="home">Home <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="about.html"> About</a>
+                                    <a class="nav-link" href="order"> Cart</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="seft">Seft</a>
@@ -134,12 +134,20 @@
                                     <img src="${bl.image}" alt="Book image">
                                     <h3><a href="detail?id=${bl.id}">${bl.title}</a></h3>
                                     <p>${bl.author}</p>
-                                    <c:set var="discountedPrice" value="${bl.price * (1 - bl.discount / 100.0)}" />
-                                    <c:set var="roundedDiscountedPrice" value="${Math.round(discountedPrice * 100.0) / 100.0}" />
-                                    <p><del>$${bl.price}</del> <strong class="discounted-price">$${roundedDiscountedPrice}</strong></p>
-
+                                    <c:choose>
+                                        <c:when test="${bl.is_sale}">
+                                            <c:set var="discountedPrice" value="${bl.price * (1 - bl.discount / 100.0)}" />
+                                            <c:set var="roundedDiscountedPrice" value="${Math.round(discountedPrice * 100.0) / 100.0}" />
+                                            <p><del>$${bl.price}</del> <strong class="discounted-price">$${roundedDiscountedPrice}</strong></p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <p>$${bl.price}</p>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
-                            </c:forEach>                          
+                            </c:forEach>
+
+
                         </div>
                     </div>
                 </div>

@@ -61,13 +61,10 @@ public class DeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        if (id != null) {
-            // Assuming you have a BookDAO that provides a method to delete a book by its ID
+        String id = request.getParameter("id");    
             BookDAO bookDAO = new BookDAO();
-            bookDAO.deleteBook(id);
-        }            
-        request.getRequestDispatcher("admin").forward(request, response);
+            bookDAO.deleteBook(id);                
+        response.sendRedirect("admin");
     }
 
     /**

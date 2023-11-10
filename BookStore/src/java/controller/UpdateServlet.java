@@ -63,13 +63,15 @@ public class UpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        BookDAO bd= new BookDAO();
         CategoryDAO c = new CategoryDAO();
         List<Category> list_cate = c.getAllCategory();
         request.setAttribute("list_cate", list_cate);
         String id_raw = request.getParameter("id");
         int id = Integer.parseInt(id_raw);
-        request.setAttribute("id", id);
-        request.getRequestDispatcher("admin/update.jsp").forward(request, response);
+        Book b= bd.getDetailBook(id);
+        request.setAttribute("b", b);
+        request.getRequestDispatcher("update.jsp").forward(request, response);
     }
 
     /**
@@ -81,36 +83,35 @@ public class UpdateServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-  
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    try {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String title = request.getParameter("title");
-        String author = request.getParameter("author");
-        int cateid = Integer.parseInt(request.getParameter("cateid"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        Double price = Double.parseDouble(request.getParameter("price"));
-        Boolean is_sale = "1".equals(request.getParameter("is_sale"));
-        int discount = Integer.parseInt(request.getParameter("discount"));
-        String image = request.getParameter("image");
-        String description = request.getParameter("description");
-
-        Book book = new Book(id, title, author, cateid, quantity, price, is_sale, discount, image, description);
-        BookDAO bookDAO = new BookDAO();
-        bookDAO.updateBook(book);
-        request.setAttribute("message", "Book updated successfully");
-    } catch (NumberFormatException e) {
-        request.setAttribute("message", "Invalid input");
-    } catch (NullPointerException e) {
-        request.setAttribute("message", "Missing input");
-    } catch (SQLException e) {
-        request.setAttribute("message", "Failed to update book");
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String title = request.getParameter("title");
+            String author = request.getParameter("author");
+            int cateid = Integer.parseInt(request.getParameter("cateid"));
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            Double price = Double.parseDouble(request.getParameter("price"));
+            Boolean is_sale = "1".equals(request.getParameter("is_sale"));
+            int discount = Integer.parseInt(request.getParameter("discount"));
+            String image = request.getParameter("image");
+            String description = request.getParameter("description");
+            
+            Book book = new Book(id, title, author, cateid, quantity, price, is_sale, discount, image, description);
+            BookDAO bookDAO = new BookDAO();
+            bookDAO.updateBook(book);
+            request.setAttribute("message", "Book updated successfully");
+        } catch (NumberFormatException e) {
+            request.setAttribute("message", "Invalid input");
+        } catch (NullPointerException e) {
+            request.setAttribute("message", "Missing input");
+        } catch (SQLException e) {
+            request.setAttribute("message", "Failed to update book");
+        }
+        
+        response.sendRedirect("admin");
     }
-
-    request.getRequestDispatcher("admin").forward(request, response);
-}
-
 
     /**
      * Returns a short description of the servlet.
